@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>电影展示</title>
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/wap.css">
+</head>
+
+<body ng-app="moviecat">
+    <!-- 顶部导航栏开始 -->
+    <div class="top" ng-controller="mainController">
+        <div class="header">
+            <a href="#/home_page"><img src="assets/img/logo.png" alt=""></a>
+            <div class="search">
+                <input ng-model="query" class="my-input" type="text" placeholder="电影搜索">
+                <button ng-click="search()">搜索</button>
+            </div>
+        </div>
+        <nav class="nav">
+            <ul>
+                <!--li中添加 active 类样式，显示焦点状态。-->
+                <li auto-active><a href="#/home_page">首页</a></li>
+                <li auto-active><a href="#/in_theaters">正在热映</a></li>
+                <li auto-active><a href="#/coming_soon">即将上映</a></li>
+                <li auto-active><a href="#/top250">Top250</a></li>
+            </ul>
+        </nav>
+    </div>
+    <!-- 顶部导航栏结束 -->
+    <div class="container">
+        
+        <div ng-view></div>
+       
+        
+        
+
+  
+        <!--其他-->
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <p>版权所有&copy; 前端与移动开发学院 火骑士空空(允许侵权)</p>
+        </div>
+    </footer>
+    <script src="../node_modules/angular/angular.js"></script>
+    <script src="../node_modules/angular-route/angular-route.js"></script>
+    <script src="assets/js/prefixfree.min.js"></script>
+    <script src="app.js"></script>
+    <script src="home_page/module.js"></script>
+    <script src="movie_list/module.js"></script>
+    <!-- <script src="in_theaters/module.js"></script> -->
+    <!-- <script src="coming_soon/module.js"></script>
+    <script src="top250/module.js"></script> -->
+    <script src="services/myjsonp.js"></script>
+    <script src="directive/auto-active.js"></script>
+    <script src="details/module.js"></script>
+</body>
+
+</html>

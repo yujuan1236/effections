@@ -1,0 +1,188 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>时钟</title>
+    <style>
+
+        #myCanvas{
+            margin:80px 0 0 350px;
+
+            border: 2px solid black;
+        }
+    </style>
+    <script type="text/javascript">
+//        for myself;★！
+           window.onload=function(){
+               var drawing=document.getElementById('myCanvas');
+               //确认浏览器支持这个元素
+               if(drawing.getContext) {
+                   var ctx = drawing.getContext("2d");
+                   var timer = null;
+                   drawClock(time()[0], time()[1], time()[2]);
+//                   ctx.fillStyle="red";
+
+                       //开始路径
+                        ctx.beginPath();
+                        //绘制外边的圆
+                          ctx.arc(300, 300, 290, 0, 2 * Math.PI, false);
+                          ctx.fillStyle = "black";
+//                          ctx.closePath();
+                          ctx.fill();
+                        //绘制里面的圆
+                       ctx.beginPath();
+                       ctx.moveTo(200, 200);
+                       ctx.arc(300, 300, 280, 0, 2 * Math.PI, false);
+                       ctx.fillStyle = "#777AFF";
+//                       ctx.closePath();
+                       ctx.fill();
+                       //绘制里面的圆心
+                       ctx.beginPath();
+                       ctx.moveTo(300, 300);
+                       ctx.arc(300, 300, 8, 0, 2 * Math.PI, false);
+                       ctx.fillStyle = "black";
+                       ctx.fill();
+//                       ctx.fillStyle = "black";
+                       ctx.stroke();
+//                       ctx.closePath();
+//                       ctx.restore();
+                   function drawClock(h, m, s) {
+                       //绘制时针
+////                       ctx.save();
+//                       ctx.translate(300,300);
+//                       ctx.rotate(30*h*Math.PI/180);
+//                       ctx.beginPath();
+//                       ctx.moveTo(300, 300);
+//                       ctx.lineTo(230, 230);
+//                       ctx.stroke();
+//                       ctx.closePath();
+//                       ctx.restore();
+                       ctx.save();
+                       ctx.lineWidth=7;
+//                       ctx.strokeStyle ='#000';
+                       ctx.translate(300,300);
+                       ctx.rotate(30*h*Math.PI/180);
+                       ctx.beginPath();
+                       ctx.moveTo(0,-140);
+                       ctx.lineTo(0,10);
+                       ctx.stroke();
+//                       ctx.closePath();
+                       ctx.restore();
+                       //绘制分针
+////                       ctx.save();
+//                       ctx.translate(300,300);
+//                       ctx.rotate(m*Math.PI/180*6);
+//                       ctx.beginPath();
+//                       ctx.moveTo(300, 300);
+//                       ctx.lineTo(410, 410);
+//                       ctx.stroke();
+//                       ctx.closePath();
+//                       ctx.restore();
+
+                       ctx.save();
+                       ctx.lineWidth=5;
+//                       ctx.strokeStyle ='#000';
+                       ctx.translate(300,300);
+                       ctx.rotate(m*Math.PI/180*6);
+                       ctx.beginPath();
+                       ctx.moveTo(0,-160);
+                       ctx.lineTo(0,15);
+                       ctx.stroke();
+                       ctx.closePath();
+                       ctx.restore();
+//
+                       //绘制秒针
+////                       ctx.save();
+//                       ctx.translate(300,300);
+//                       ctx.rotate(s*Math.PI/30);
+//                       ctx.beginPath();
+//                       ctx.moveTo(300, 300);
+//                       ctx.lineTo(490, 190);
+//                       ctx.stroke();
+//                       ctx.closePath();
+//                       ctx.restore();
+
+                       ctx.save();
+                       ctx.lineWidth=3;
+//                       ctx.strokeStyle ='red';
+                       ctx.translate(300,300);
+                       ctx.rotate(6*s*Math.PI/180);
+                       ctx.beginPath();
+                       ctx.moveTo(0,-185);
+                       ctx.lineTo(0,20);
+                       ctx.stroke();
+                       ctx.closePath();
+                       ctx.restore();
+
+
+                       ctx.save();
+                       ctx.translate(300,300);
+                       ctx.lineWidth=3;
+                       ctx.strokeStyle = '#f00';
+                       ctx.fillStyle = '#fff';
+                       ctx.beginPath();
+                       ctx.arc(0,0,5,0,2*Math.PI,false);
+                       ctx.fill();
+                       ctx.stroke();
+                       ctx.closePath();
+                       ctx.restore();
+
+                       ////绘制小刻度，圆一周360°，秒针每6°（π/30）走一下
+                       //起始点是小圆的边
+                       for (var i = 0; i < 2 * Math.PI; i = i + (Math.PI / 30)) {
+//                       var secx=280*Math.sin(i);
+//                       var secy=280*Math.cos(i);
+                           ctx.fillStyle = "black";
+                           ctx.lineWidth = 2;
+                           ctx.moveTo(300 + 280 * Math.sin(i), 300 - 280 * Math.cos(i));
+                           ctx.lineTo(300 + 270 * Math.sin(i), 300 - 270 * Math.cos(i));
+//                       ctx.stroke();
+                       }
+                       //  ////绘制中等刻度，圆一周360°，分针每30°（π/6）走一下
+                       for (var i = 0; i < 2 * Math.PI; i = i + (Math.PI / 6)) {
+                           ctx.fillStyle = "black";
+                           ctx.lineWidth = 4;
+                           ctx.moveTo(300 + 280 * Math.sin(i), 300 - 280 * Math.cos(i));
+                           ctx.lineTo(300 + 255 * Math.sin(i), 300 - 255 * Math.cos(i));
+                           ctx.stroke();
+                       ctx.restore();
+
+                       }
+                       //绘制刻度上对应的文字，每30°一个，1-12；
+                       for (var j = 11, i = Math.PI / 6; j > 0, i < 2 * Math.PI; j--, i = i + (Math.PI / 6)) {
+                           ctx.font = "bold 14px Arial";
+                           ctx.fillText(j, 300 - 240 * Math.sin(i), 300 - 240 * Math.cos(i));
+
+                       }
+                       ctx.fillText("12", 300, 60);
+
+                   }
+
+                   function time(){
+                       var iNow = new Date();
+                       var Hrs = (format(iNow.getHours())+iNow.getMinutes()/60);
+                       var Mins = (iNow.getMinutes() + iNow.getSeconds()/60);
+                       var Secs = iNow.getSeconds();
+                       console.log(iNow);
+                       return [Hrs,Mins,Secs];
+                   }
+                   timer = setInterval(function (){
+                       ctx.clearRect(0,0,600,600);
+                       drawClock(time()[0], time()[1],time()[2]);
+                   },1000);
+
+                   function format(hrs){
+                       return hrs = hrs >= 12 ? hrs - 12 : hrs;
+                   }
+
+               }
+           }
+
+    </script>
+</head>
+<body>
+
+<canvas id="myCanvas" width="600" height="600" >A canvas of something</canvas>
+
+</body>
+</html>
